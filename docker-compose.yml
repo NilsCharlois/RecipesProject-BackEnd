@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    environment: 
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: RecipeProject
+    volumes:
+      - ./pgdata:/home/nils/docker/volumes/postgres
+    expose:
+      - '5432'
+  backend:
+    build: .
+    image: recipesproject-backend
+    depends_on:
+      - db
+    ports:
+       - '5000:5000'

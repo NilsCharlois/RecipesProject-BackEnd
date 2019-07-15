@@ -1,25 +1,9 @@
 {
   "development": {
     "username": "postgres",
-    "password": "docker",
+    "password": "postgres",
     "database": "RecipeProject",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": false
-  },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": false
-  },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "host": "db",
     "dialect": "postgres",
     "operatorsAliases": false
   }
