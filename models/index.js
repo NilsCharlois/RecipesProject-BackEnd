@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
+const postgres = {};
 
 let sequelize;
 if (config.use_env_variable) {
@@ -22,16 +22,16 @@ fs
   })
   .forEach(file => {
     const model = sequelize['import'](path.join(__dirname, file));
-    db[model.name] = model;
+    postgres[model.name] = model;
   });
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
+Object.keys(postgres).forEach(modelName => {
+  if (postgres[modelName].associate) {
+    postgres[modelName].associate(postgres);
   }
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+postgres.sequelize = sequelize;
+postgres.Sequelize = Sequelize;
 
-module.exports = db;
+module.exports = postgres;

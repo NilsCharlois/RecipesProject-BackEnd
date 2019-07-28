@@ -1,20 +1,51 @@
-version: '3.7'
+version: '3.5'
 
 services:
-  db:
+  postgres:
+    container_name: postgres_container
     image: postgres
     environment: 
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: RecipeProject
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      PGDATA: /home/nils/docker/volumes/postgres
     volumes:
       - ./pgdata:/home/nils/docker/volumes/postgres
+    ports:
+      - "5432:5432"
     expose:
-      - '5432'
+      - 5432
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-pwdpwd}
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+
   backend:
+    container_name: recipesproject_backend_container
     build: .
     image: recipesproject-backend
-    depends_on:
-      - db
+    networks:
+      - postgres
     ports:
-       - '5000:5000'
+       - "5000:5000"
+    restart: unless-stopped
+
+networks:
+  postgres:
+   driver: bridge
+
+volumes:
+  pgdata:
+  pgadmin:
