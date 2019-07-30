@@ -3,7 +3,7 @@
     "username": "postgres",
     "password": "postgres",
     "database": "RecipeProject",
-    "host": "localhost",
+    "host": "postgres",
     "dialect": "postgres",
     "operatorsAliases": false
   }
