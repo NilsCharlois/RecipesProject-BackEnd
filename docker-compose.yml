@@ -34,7 +34,7 @@ services:
 
   backend:
     container_name: recipesproject_backend_container
-    build: .
+    build: ../TestGraphQL/
     image: recipesproject-backend
     networks:
       - postgres
